@@ -1,0 +1,4 @@
+.table img { width: 50px; height: 50px; object-fit: cover; }
+.total-section { font-size: 1.2rem; font-weight: bold; }
+/* 防止输入框太宽 */
+.qty-input { max-width: 60px; }

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的购物车 - 电子商城</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/cart.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1100">
+    <div id="liveToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body" id="toast-msg"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+<nav class="navbar navbar-light bg-light mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="/index.html">⬅ 返回商城首页</a>
+        <span class="navbar-text">我的购物车</span>
+    </div>
+</nav>
+
+<div class="container">
+    <h3 class="mb-4">购物车清单</h3>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-hover align-middle">
+                <thead>
+                <tr>
+                    <th scope="col" style="width: 40%">商品信息</th>
+                    <th scope="col" style="width: 15%">单价</th>
+                    <th scope="col" style="width: 20%">数量</th>
+                    <th scope="col" style="width: 15%">小计</th>
+                    <th scope="col" style="width: 10%">操作</th>
+                </tr>
+                </thead>
+                <tbody id="cart-items"></tbody>
+            </table>
+
+            <div id="empty-cart-msg" class="text-center py-5 d-none">
+                <p class="text-muted">购物车空空如也</p>
+                <a href="/index.html" class="btn btn-outline-primary">去逛逛</a>
+            </div>
+        </div>
+
+        <div class="card-footer bg-white d-flex justify-content-between align-items-center py-3">
+            <div class="text-danger total-section">
+                总金额: <span id="total-price">¥0.00</span>
+            </div>
+            <button id="checkout-btn" class="btn btn-success btn-lg" onclick="showCheckoutModal()" disabled>
+                去结算
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 支付确认 Modal -->
+<div class="modal fade" id="checkoutModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">确认订单 & 支付</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="orderForm">
+                    <div class="mb-3">
+                        <label class="form-label">收货人姓名</label>
+                        <input type="text" class="form-control" id="receiverName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">收货地址</label>
+                        <textarea class="form-control" id="address" rows="2" required placeholder="请输入详细地址"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">支付方式</label>
+                        <select class="form-select">
+                            <option>在线支付 (模拟)</option>
+                            <option>货到付款</option>
+                        </select>
+                    </div>
+                    <div class="alert alert-info py-2 small">
+                        <i class="bi bi-info-circle"></i> 点击确认后，系统将发送确认邮件至您的注册邮箱。
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" onclick="submitOrder()" class="btn btn-primary">确认支付</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 删除确认 Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">移除商品</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                确定要从购物车移除此商品吗？
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger btn-sm" onclick="executeDelete()">移除</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/cart.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+.sidebar-link { text-decoration: none; color: #333; display: block; padding: 10px; border-radius: 5px; }
+.sidebar-link:hover, .sidebar-link.active { background-color: #e9ecef; color: #0d6efd; font-weight: bold; }
+.log-type-view { color: #6c757d; }
+.log-type-order { color: #198754; font-weight: bold; }
+.log-type-login { color: #0d6efd; }
