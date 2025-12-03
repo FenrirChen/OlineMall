@@ -1,23 +1,42 @@
+// 页面加载入口
 document.addEventListener('DOMContentLoaded', function() {
-    checkLoginStatus();
+    checkUserRole(); // 1. 先检查角色，如果是管理员直接踢走
+    // 2. 如果是顾客或游客，继续加载页面
     loadProducts();
 });
+
+function checkUserRole() {
+    const userStr = localStorage.getItem('user');
+
+    if (userStr) {
+        const user = JSON.parse(userStr);
+
+        // 如果是管理员访问首页，自动跳转到后台仪表盘
+        if (user.role === 'ADMIN') {
+            window.location.replace('/admin/dashboard.html');
+            return;
+        }
+
+        // 如果是普通顾客，更新导航栏
+        document.getElementById('welcome-msg').textContent = `欢迎, ${user.username}`;
+        document.getElementById('login-nav-item').classList.add('d-none');
+        document.getElementById('cart-nav-item').classList.remove('d-none');
+        document.getElementById('order-nav-item').classList.remove('d-none');
+        document.getElementById('logout-nav-item').classList.remove('d-none');
+    } else {
+        // 游客状态
+        document.getElementById('welcome-msg').textContent = '欢迎, 游客';
+    }
+
+    // 检查完毕，显示页面
+    document.body.style.visibility = 'visible';
+}
 
 function showToast(msg, type = 'success') {
     const toastEl = document.getElementById('liveToast');
     document.getElementById('toast-msg').innerText = msg;
     toastEl.className = `toast align-items-center text-white border-0 bg-${type === 'error' ? 'danger' : 'success'}`;
     new bootstrap.Toast(toastEl).show();
-}
-
-function checkLoginStatus() {
-    const userStr = localStorage.getItem('user');
-    if (userStr) {
-        const user = JSON.parse(userStr);
-        document.getElementById('welcome-msg').textContent = `欢迎, ${user.username}`;
-    } else {
-        document.getElementById('welcome-msg').textContent = '欢迎, 游客';
-    }
 }
 
 function loadProducts(keyword = '') {
@@ -43,7 +62,6 @@ function renderProducts(products) {
     let html = '';
     products.forEach(p => {
         const imgUrl = p.imageUrl || 'https://via.placeholder.com/300x200?text=Product';
-        // 增加了数量输入框
         html += `
                 <div class="col-md-3 mb-4">
                     <div class="card product-card h-100">
@@ -84,7 +102,6 @@ function addToCart(productId) {
         return;
     }
 
-    // 获取输入框里的数量
     const qtyInput = document.getElementById(`qty-${productId}`);
     const quantity = qtyInput ? parseInt(qtyInput.value) : 1;
 
