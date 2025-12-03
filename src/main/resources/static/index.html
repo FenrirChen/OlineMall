@@ -9,6 +9,7 @@
 </head>
 <body>
 
+<!-- Toast -->
 <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1100">
     <div id="liveToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="d-flex">
@@ -29,15 +30,20 @@
                 <li class="nav-item">
                     <span class="nav-link text-white" id="welcome-msg">欢迎, 游客</span>
                 </li>
-                <li class="nav-item">
+                <!-- 登录按钮 (未登录时显示) -->
+                <li class="nav-item" id="login-nav-item">
+                    <a class="nav-link" href="/login.html">登录/注册</a>
+                </li>
+                <!-- 购物车和订单 (登录后显示) -->
+                <li class="nav-item d-none" id="cart-nav-item">
                     <a class="nav-link" href="/cart.html">
                         购物车 <span class="badge bg-danger" id="cart-badge"></span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item d-none" id="order-nav-item">
                     <a class="nav-link" href="/orders.html">我的订单</a>
                 </li>
-                <li class="nav-item ms-2">
+                <li class="nav-item ms-2 d-none" id="logout-nav-item">
                     <button onclick="logout()" class="btn btn-outline-light btn-sm">注销</button>
                 </li>
             </ul>
